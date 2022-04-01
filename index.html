@@ -26,8 +26,8 @@
     <script>
         const X_PIXELS=23
         const Y_PIXELS=23
-        const X_OFFSET=17
-        const Y_OFFSET=17
+        const X_OFFSET=0
+        const Y_OFFSET=0
 
         const X_IN_PLACE=773
         const Y_IN_PLACE=735
@@ -48,20 +48,24 @@
 
         const img = new Image();
         img.onload = function(){
-            bg.canvas.width  = img.width;
-            bg.canvas.height = img.height;
 
-            fg.canvas.width  = img.width;
-            fg.canvas.height = img.height;
-            bg.drawImage(img, 0,0, img.width, img.height);
+            w = img.width
+            h = img.height
+
+            bg.canvas.width  = w;
+            bg.canvas.height = h;
+
+            fg.canvas.width  = w;
+            fg.canvas.height = h;
+            bg.drawImage(img,0,0,img.width,img.height,0,0,w,h)
         };
-        img.src = "images/Design_B_final_-_0_top_left.png";
+        img.src = "images/GME14_blown.png";
 
         foreground.addEventListener('mousemove', event =>
         {
             let p = getMousePos(foreground, event);
-            let x = Math.round((p.x-X_OFFSET)/X_PIXELS) + X_IN_PLACE - 1;
-            let y = Math.round((p.y-Y_OFFSET)/Y_PIXELS) + Y_IN_PLACE - 1;
+            let x = Math.floor((p.x-X_OFFSET)/X_PIXELS) + X_IN_PLACE;
+            let y = Math.floor((p.y-Y_OFFSET)/Y_PIXELS) + Y_IN_PLACE;
             fg.clearRect(0, 0, fg.canvas.width, fg.canvas.height);
 
             if (x>0 && y>0){
