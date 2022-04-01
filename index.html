@@ -26,8 +26,8 @@
     <script>
         const X_PIXELS=23
         const Y_PIXELS=23
-        const X_OFFSET=0
-        const Y_OFFSET=0
+        const X_OFFSET=400
+        const Y_OFFSET=100
 
         const X_IN_PLACE=773
         const Y_IN_PLACE=735
@@ -40,13 +40,13 @@
             };
         }
 
-        function drawGrid(w, h, ctx) {
-            for (x = 0; x <= w; x += X_PIXELS) {
+        function drawGrid(x_0, y_0, x_max, y_max, ctx) {
+            for (let x = x_0; x <= x_max; x += X_PIXELS) {
                 ctx.moveTo(x, 0);
-                ctx.lineTo(x, h);
-                for (y = 0; y <= h; y += Y_PIXELS) {
+                ctx.lineTo(x, y_max);
+                for (let y = y_0; y <= y_max; y += Y_PIXELS) {
                     ctx.moveTo(0, y);
-                    ctx.lineTo(w, y);
+                    ctx.lineTo(x_max, y);
                 }
             }
             ctx.strokeStyle = '#bbbbbb';
@@ -61,24 +61,23 @@
 
         const img = new Image();
         img.onload = function(){
-
             w = img.width
             h = img.height
 
-            bg.canvas.width  = w;
-            bg.canvas.height = h;
+            bg.canvas.width  = w + X_OFFSET;
+            bg.canvas.height = h + Y_OFFSET;
 
-            fg.canvas.width  = w;
-            fg.canvas.height = h;
-            bg.drawImage(img,0,0,img.width,img.height,0,0,w,h)
-            drawGrid(w,h,bg)
+            fg.canvas.width  = bg.canvas.width;
+            fg.canvas.height = bg.canvas.height;
+            bg.drawImage(img, 0, 0, img.width, img.height, 0, Y_OFFSET, w, h)
+            drawGrid(0, Y_OFFSET, bg.canvas.width, bg.canvas.height, bg)
         };
         img.src = "images/GME14_blown.png";
 
         foreground.addEventListener('mousemove', event =>
         {
             let p = getMousePos(foreground, event);
-            let x = Math.floor((p.x-X_OFFSET)/X_PIXELS) + X_IN_PLACE;
+            let x = Math.floor((p.x)/X_PIXELS) + X_IN_PLACE;
             let y = Math.floor((p.y-Y_OFFSET)/Y_PIXELS) + Y_IN_PLACE;
             fg.clearRect(0, 0, fg.canvas.width, fg.canvas.height);
 
