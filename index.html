@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Superstonk's rPlace</title>
+    <style>
+        .container {
+            position: relative;
+        }
+
+        .container > canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id = "container" class = "container">
+      <canvas id = "canvas_background" width = "800" height = "500"></canvas>
+      <canvas id = "canvas_foreground" width = "800" height = "500"></canvas>
+    </div>
+
+
+    <script>
+        const X_PIXELS=23
+        const Y_PIXELS=23
+        const X_OFFSET=17
+        const Y_OFFSET=17
+
+        function getMousePos(canvas, evt) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+                y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+            };
+        }
+
+        const background = document.getElementById("canvas_background");
+        const bg = background.getContext("2d");
+
+        const  foreground = document.getElementById("canvas_foreground");
+        const fg = foreground.getContext("2d");
+
+        const img = new Image();
+        img.onload = function(){
+            bg.canvas.width  = img.width;
+            bg.canvas.height = img.height;
+
+            fg.canvas.width  = img.width;
+            fg.canvas.height = img.height;
+            bg.drawImage(img, 0,0, img.width, img.height);
+        };
+        img.src = "images/Design_B_final_-_0_top_left.png";
+
+        foreground.addEventListener('mousemove', event =>
+        {
+            let p = getMousePos(foreground, event);
+            let x = Math.round((p.x-X_OFFSET)/X_PIXELS);
+            let y = Math.round((p.y-Y_OFFSET)/Y_PIXELS);
+            fg.clearRect(0, 0, fg.canvas.width, fg.canvas.height);
+
+            if (x>0 && y>0){
+                let text = x+' / ' + y;
+                fg.font = '80px Sans-serif';
+                fg.strokeStyle = 'black';
+                fg.lineWidth = 8;
+                fg.strokeText(text, p.x+10, p.y + 20);
+                fg.fillStyle = 'white';
+                fg.fillText(text, p.x+10, p.y + 20);
+            }
+        });
+
+    </script>
+
+</body>
+</html>
