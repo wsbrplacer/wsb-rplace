@@ -1,8 +1,9 @@
+<!-- With credit to superstonk and https://github.com/halfdane/rplace -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Superstonk's rPlace</title>
+    <title>WSB</title>
     <style>
         .container {
             position: relative;
@@ -24,13 +25,13 @@
 
 
     <script>
-        const X_PIXELS=23
-        const Y_PIXELS=23
+        const X_PIXELS=25
+        const Y_PIXELS=25
         const X_OFFSET=400
         const Y_OFFSET=100
 
-        const X_IN_PLACE=773
-        const Y_IN_PLACE=735
+        const X_IN_PLACE=599
+        const Y_IN_PLACE=560
 
         function getMousePos(canvas, evt) {
             const rect = canvas.getBoundingClientRect();
@@ -72,7 +73,7 @@
             bg.drawImage(img, 0, 0, img.width, img.height, 0, Y_OFFSET, w, h)
             drawGrid(0, Y_OFFSET, bg.canvas.width, bg.canvas.height, bg)
         };
-        img.src = "images/GME14_new_blown.png";
+        img.src = "images/wsb-125x.png";
 
         foreground.addEventListener('mousemove', event =>
         {
@@ -97,7 +98,7 @@
             let p = getMousePos(foreground, event);
             let x = Math.floor((p.x)/X_PIXELS) + X_IN_PLACE;
             let y = Math.floor((p.y-Y_OFFSET)/Y_PIXELS) + Y_IN_PLACE;
-            let url ="https://www.reddit.com/r/place/?cx="+x+"&cy="+y+"&px=23"
+            let url ="https://www.reddit.com/r/place/?cx="+x+"&cy="+y+"&px=25"
             window.open(url, '_blank').focus();
         });
 
