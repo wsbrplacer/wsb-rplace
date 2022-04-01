@@ -29,6 +29,9 @@
         const X_OFFSET=17
         const Y_OFFSET=17
 
+        const X_IN_PLACE=773
+        const Y_IN_PLACE=735
+
         function getMousePos(canvas, evt) {
             const rect = canvas.getBoundingClientRect();
             return {
@@ -57,8 +60,8 @@
         foreground.addEventListener('mousemove', event =>
         {
             let p = getMousePos(foreground, event);
-            let x = Math.round((p.x-X_OFFSET)/X_PIXELS);
-            let y = Math.round((p.y-Y_OFFSET)/Y_PIXELS);
+            let x = Math.round((p.x-X_OFFSET)/X_PIXELS) + X_IN_PLACE - 1;
+            let y = Math.round((p.y-Y_OFFSET)/Y_PIXELS) + Y_IN_PLACE - 1;
             fg.clearRect(0, 0, fg.canvas.width, fg.canvas.height);
 
             if (x>0 && y>0){
